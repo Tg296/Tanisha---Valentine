@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tanisha 💖 My Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: #fff1e6;
+  font-family: 'Quicksand', sans-serif;
+  color: #3a2c2c;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+header {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #ffb3c6, #ffe5d9);
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 3em;
+}
+
+.section {
+  padding: 60px 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 25px;
+  padding: 40px;
+  max-width: 700px;
+  margin: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.memory {
+  position: relative;
+  cursor: pointer;
+}
+
+.memory img {
+  width: 100%;
+  border-radius: 20px;
+  filter: blur(6px);
+  transition: 0.5s;
+}
+
+.memory.revealed img {
+  filter: none;
+}
+
+.memory span {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 8px;
+}
+
+button {
+  background: #ff5d8f;
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  font-size: 1.1em;
+  border-radius: 40px;
+  cursor: pointer;
+  margin: 15px;
+}
+
+.button-area {
+  position: relative;
+  height: 160px;
+  margin-top: 40px;
+}
+
+#yes { position: absolute; left: 30%; top: 60px; }
+#no {
+  position: absolute;
+  left: 55%;
+  top: 60px;
+  background: #ffd6e0;
+  color: #ff5d8f;
+}
+
+footer { padding: 30px; }
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 22px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* FINAL SCREEN */
+#finalScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ffb3c6, #ffe5d9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+  z-index: 9999;
+}
+
+#finalScreen.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.heartbeat {
+  animation: beat 1.2s infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.handwritten {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8em;
+  max-width: 700px;
+  margin-top: 20px;
+  opacity: 0;
+  animation: reveal 2s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes reveal {
+  to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tanisha 💕</h1>
+  <p>One year of us, countless memories, infinite love</p>
+  <div id="counter"></div>
+</header>
+
+<div class="section">
+  <div class="card">
+    <p>You are my comfort, my chaos, my calm, and my home.</p>
+
+    <button onclick="showLove()">Why I love you 💌</button>
+    <p id="loveText"></p>
+
+    <button onclick="hug()">Tap for a hug 🤍</button>
+    <p id="hugText"></p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Tap our memories 📸</h2>
+  <div class="gallery">
+    <div class="memory" onclick="this.classList.add('revealed')">
+      <img src="photo1.jpeg"><span>Forever us</span>
+    </div>
+    <div class="memory" onclick="this.classList.add('revealed')">
+      <img src="photo2.jpeg"><span>My favourite person</span>
+    </div>
+    <div class="memory" onclick="this.classList.add('revealed')">
+      <img src="photo3.jpeg"><span>Always you</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h1>Will you be my Valentine? 🌹</h1>
+  <div class="button-area">
+    <button id="yes" onclick="yesClicked()">YES 💖</button>
+    <button id="no" onmouseover="moveNo()">NO 🙄</button>
+  </div>
+</div>
+
+<footer>Made with all my love ❤️</footer>
+
+<!-- AUDIO -->
+<audio id="music" loop>
+  <source src="./music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FINAL SCREEN -->
+<div id="finalScreen">
+  <h1 class="heartbeat">Love You Tanisha</h1>
+  <p>See you soon!</p>
+  <div class="handwritten">
+    I choose you — in every lifetime, every universe, every version of me ❤️
+  </div>
+  <button onclick="forever()">FOREVER 💖</button>
+</div>
+
+<script>
+let musicStarted = false;
+
+document.addEventListener("click", () => {
+  if (!musicStarted) {
+    const m = document.getElementById("music");
+    m.volume = 0.35;
+    m.play();
+    musicStarted = true;
+  }
+});
+
+const reasons = [
+  "You make ordinary days magical.",
+  "Your laugh feels like home.",
+  "You understand me without words.",
+  "Life is softer with you."
+];
+
+function showLove() {
+  loveText.innerText = reasons[Math.floor(Math.random()*reasons.length)];
+}
+
+function hug() {
+  if (navigator.vibrate) navigator.vibrate(200);
+  hugText.innerText = "This is me hugging you tight 🤍";
+}
+
+function moveNo() {
+  const b = document.getElementById("no");
+  const a = document.querySelector(".button-area");
+  b.style.left = Math.random()*(a.clientWidth-80)+"px";
+  b.style.top = Math.random()*(a.clientHeight-40)+"px";
+}
+
+function yesClicked() {
+  confetti();
+  swellMusic();
+  setTimeout(()=>finalScreen.classList.add("show"), 2000);
+}
+
+function forever() {
+  confetti();
+}
+
+function swellMusic() {
+  const m = music;
+  let v = m.volume;
+  const i = setInterval(()=>{
+    if (v < 0.6) { v += 0.02; m.volume = v; }
+    else clearInterval(i);
+  }, 200);
+}
+
+function confetti() {
+  for(let i=0;i<60;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }
+}
+
+const start = new Date(2024,10,13);
+setInterval(()=>{
+  const d=Math.floor((Date.now()-start)/(1000*60*60*24));
+  counter.innerText=We’ve been us for ${d} days 💕;
+},1000);
+</script>
+
+</body>
+</html>
